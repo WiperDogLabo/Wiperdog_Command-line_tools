@@ -26,8 +26,9 @@ while(jobName == null || jobName.equals("")) {
  print "Enter job name need to create instance (*) :" ;
  jobName =  reader.readLine()
 }
+def basedir = new File(getClass().protectionDomain.codeSource.location.path).parent
 
-def instFile = new File("../var/job/" + jobName + ".instances")
+def instFile = new File(basedir + "/../var/job/" , jobName + ".instances")
 def instTxt = ""
 if(!instFile.exists()){
 	instFile.createNewFile()
@@ -50,7 +51,6 @@ while(!leaveInput) {
 		leaveInput = true
 		break;
 	} else {
-		println instName + "----------" +mapInstances
 		if(checkExistsInst(mapInstances,instName)) {
 			print "Instance name exists,please try again !\n" ;
 			continue label1

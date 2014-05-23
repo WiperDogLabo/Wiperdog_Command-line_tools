@@ -23,7 +23,8 @@ println "---------------------------"
 print "Enter job file name for param creation (*) : " ;
 def jobFileName =  reader.readLine()
 def mapParams = [:]
-def paramFile = new File("../var/job/" + jobFileName+".params")
+def basedir = new File(getClass().protectionDomain.codeSource.location.path).parent
+def paramFile = new File(basedir + "/../var/job", jobFileName+".params")
 if(paramFile.exists()) {
 	def shell = new GroovyShell()
 	def currentParams =  shell.evaluate(paramFile)

@@ -32,7 +32,6 @@ while(!whileCondition){
 			break
 		}
 	}catch(Exception ex){
-		ex.printStackTrace()
 		println "Job concurrency must be numberic ,please try again !"				
 	}
 }
@@ -74,7 +73,8 @@ if(jobClassFileName == null || jobClassFileName.trim().equals("") ){
 if(!jobClassFileName.endsWith(".cls")){
 	jobClassFileName += ".cls"
 }
-File jobClassFile = new File("../var/job/"+jobClassFileName);
+def basedir = new File(getClass().protectionDomain.codeSource.location.path).parent
+File jobClassFile = new File(basedir + "/../var/job",jobClassFileName);
 if(!jobClassFile.exists()){
 	jobClassFile.createNewFile()
 } 

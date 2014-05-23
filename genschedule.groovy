@@ -37,7 +37,8 @@ public class GenSchedule{
 			if(trgFileName == null){
 				trgFileName = jobName + ".trg"
 			}
-			File trgFile = new File("../var/job/"+trgFileName);
+			def basedir = new File(getClass().protectionDomain.codeSource.location.path).parent
+			File trgFile = new File(basedir + "/../var/job/",trgFileName);
 			if(!trgFile.exists()){
 				trgFile.createNewFile()
 			} 
