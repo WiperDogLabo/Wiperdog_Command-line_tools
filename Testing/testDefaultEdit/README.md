@@ -5,4 +5,5 @@ Guide test:
 2. Run test: test_defaultedit.sh
 
 	cd /path/to/file/test_defaultedit.sh
+	
 	./test_defaultedit.sh <path/to/wiperdog>
