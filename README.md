@@ -1,4 +1,4 @@
-Wiperodg_Command-line_tools
+Wiperdog_Command-line_tools
 ===========================
 Command line tools for wiperdog, (tools should be located at $Wiperdog_HOME/bin)
  + Command-line tools/:
