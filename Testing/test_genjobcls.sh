@@ -1,8 +1,8 @@
 #!/usr/bin/expect
 #!/bin/bash
-
+puts "++++++++++++++++++++++++++"
 puts "Test tools 'genjobcls'"
-puts "------------------------"
+puts "++++++++++++++++++++++++++"
 puts "#Case1: Input all require data: "
 set wiperdogPath  [lindex $argv 0]
 set source_file testGenJobCls/A.cls
@@ -24,12 +24,11 @@ sleep 1
 #After file written , check content with efxpected file
 set status [catch {exec diff "$source_file" "$dest_file"} result]
 if {$status == 0} {
-   puts "-----------------"
    puts "Case 1 Success !\r"
 } else {
-   puts "-----------------"
    puts "Case 1 Failed ! \r"
 } 
+puts "---------------------------------------"
 
 puts "#Case2: Leave job max wait empty: "
 set wiperdogPath  [lindex $argv 0]
@@ -53,13 +52,11 @@ sleep 1
 #After file written , check content with efxpected file
 set status [catch {exec diff "$source_file" "$dest_file"} result]
 if {$status == 0} {
-   puts "-----------------"
    puts "Case 2 Success !\033\[0m\r"
 } else {
-   puts "-----------------"
    puts "Case 2 Failed ! \r"
 } 
-
+puts "---------------------------------------"
 puts "#Case3: Leave maxrun and maxwait empty: "
 set wiperdogPath  [lindex $argv 0]
 set source_file testGenJobCls/A_3.cls
@@ -81,13 +78,11 @@ sleep 1
 #After file written , check content with efxpected file
 set status [catch {exec diff "$source_file" "$dest_file"} result]
 if {$status == 0} {
-   puts "-----------------"
    puts "Case 3 Success !\033\[0m\r"
 } else {
-   puts "-----------------"
    puts "Case 3 Failed ! \r"
 } 
-
+puts "---------------------------------------"
 puts "#Case4: Leave maxrun and maxwait empty: "
 set wiperdogPath  [lindex $argv 0]
 set source_file testGenJobCls/A_4.cls
@@ -109,9 +104,7 @@ sleep 1
 #After file written , check content with efxpected file
 set status [catch {exec diff "$source_file" "$dest_file"} result]
 if {$status == 0} {
-   puts "-----------------"
    puts "Case 4 Success !\r"
 } else {
-   puts "-----------------"
    puts "Case 4 Failed ! \r"
 } 
