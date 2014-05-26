@@ -8,10 +8,12 @@ Command line tools for wiperdog, (tools should be located at $Wiperdog_HOME/bin)
 	- genjobparam : Creat/update job param file
 + Testing/ : 
 	- Script test for command-line tools
+	
 Usage :
 	- Run tools as Unix shell script
+		 EX: ./genschedule.sh
 
-	 EX: ./genschedule.sh
-	- Rung test
-
+	- Run test
+	Before testing ,please install "expect" tools in ubuntu environment
+         sudo apt-get install expect
 	EX: ./test_genschedule.sh /path/to/wiperdog
