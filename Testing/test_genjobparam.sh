@@ -2,7 +2,7 @@
 #!/bin/bash
 if {$::argc == 0} {
    puts "Incorrect parameter !"
-   puts "Usage: ./test_genjobinst.sh /wiperdog_home_path"
+   puts "Usage: ./test_genjobparam.sh /wiperdog_home_path"
    exit
 }
 puts "++++++++++++++++++++++++++"
