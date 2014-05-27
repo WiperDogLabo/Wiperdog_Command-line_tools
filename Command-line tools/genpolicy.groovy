@@ -1,6 +1,5 @@
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import groovy.json.*
+import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -22,7 +21,12 @@ public class ProcessGeneratePolicy {
 	def static mappolicy = [:]
 	def static mapPolicyForKey = [:]
 	public static void main(String[] args) throws Exception {
-		def filePath = System.getProperty("user.dir")
+		def filePath
+		if (args[0] == ".") {
+			filePath = System.getProperty("user.dir")
+		} else {
+			filePath = args[0]
+		}
 		def policyPath = filePath.replace("bin", "/var/job/policy")
 		def policyStr
 		def listStrKey = ""
@@ -37,11 +41,11 @@ public class ProcessGeneratePolicy {
 			print "Please choose job type: "
 			type = reader.readLine()
 		}
-		print "Enter list key data: [a, b, c, ...]: "
+		print "Enter list key data: (a, b, c, ...): "
 		listStrKey = reader.readLine().split(",")
 		ArrayList<String> listKey = new ArrayList<String>()
 		listStrKey.each {
-			listKey.add(it)
+			listKey.add(it.trim())
 		}
 
 		while(!confirmLoop) {
@@ -53,7 +57,12 @@ public class ProcessGeneratePolicy {
 		data['mappolicy'] = mappolicy
 
 		policyStr = generatePolicyString(data, listKey, type)
-		def policyFile = new File(policyPath + "/" + jobName + "." + istIid + ".policy")
+		def policyFile
+		if (istIid != null && istIid != "") {
+			policyFile = new File(policyPath + "/" + jobName + "." + istIid + ".policy")
+		} else {
+			policyFile = new File(policyPath + "/" + jobName + ".policy")
+		}
 		try {
 			policyFile.setText(policyStr)
 			println "[SUCCESS] POLICY FILE IS CREATED/UPDATE !!!"
@@ -70,10 +79,10 @@ public class ProcessGeneratePolicy {
 				print "Please choose level for policy: "
 				level = reader.readLine()
 			}
-			print "Enter Condition [ a > 3 ]: "
+			print "Enter Condition (a > 3): "
 			condition = reader.readLine()
-			print "Enter Message (Leave message empty to finish input): "
-			message = reader.readLine()
+			print "Enter Message: "
+			message = reader.readLine().trim()
 			mappolicy[condition] = message
 			print "Do you want add condition (y|Y|n|N) ?"
 			def check = reader.readLine()
@@ -81,7 +90,7 @@ public class ProcessGeneratePolicy {
 				confirmLoop = true
 			}
 		} else if (type == "subtyped") {
-			print "Enter Group (If job is subtyped): "
+			print "Enter Group: "
 			group = reader.readLine()
 			if (mappolicy[group] != null) {
 				mapPolicyForKey = mappolicy[group]
@@ -92,10 +101,10 @@ public class ProcessGeneratePolicy {
 				print "Please choose level for policy: "
 				level = reader.readLine()
 			}
-			print "Enter Condition [ a > 3 ]: "
+			print "Enter Condition (a > 3): "
 			condition = reader.readLine()
-			print "Enter Message (Leave message empty to finish input): "
-			message = reader.readLine()
+			print "Enter Message: "
+			message = reader.readLine().trim()
 			mapPolicyForKey[condition] = message
 			mappolicy[group] = mapPolicyForKey
 			mapPolicyForKey = [:]
@@ -109,32 +118,31 @@ public class ProcessGeneratePolicy {
 
 	def static generatePolicyString(data, listKey, type){
 	    def policyStr = ""
-	    //return data
 	    try {
 	        if(type == "store") {
 			    if(data.mappolicy != null && data.mappolicy.size() > 0){
-			   	policyStr += "POLICY = {resultData->\n"
-			   	policyStr += "\tdef listMess = []\n"
-				policyStr += "\tdef ret = ['jobName' : '" + data.jobName + "', 'istIid' : '" + data.instanceName + "']\n"
-			   	def mapPolicy = data.mappolicy
-			   	policyStr += "\tresultData.each{data->\n"
-			   	mapPolicy.each {key,value ->
-				    key = key.trim()
-				    if(key[0] != "("){
-			 	        key = "(" + key
+				   	policyStr += "POLICY = {resultData->\n"
+				   	policyStr += "\tdef listMess = []\n"
+					policyStr += "\tdef ret = ['jobName' : '" + data.jobName + "', 'istIid' : '" + data.instanceName + "']\n"
+				   	def mapPolicy = data.mappolicy
+				   	policyStr += "\tresultData.each{data->\n"
+				   	mapPolicy.each {key,value ->
+					    key = key.trim()
+					    if(key[0] != "("){
+				 	        key = "(" + key
+					    }
+					    if(key[key.size() - 1] != ")"){
+					        key = key + ")"
+					    }
+							   
+					    // if statement
+					    policyStr += "\t\tif(" + getDataConditionsAfterEdit(key, listKey) + "){\n"
+					    // message print statement
+					    policyStr += "\t\t\tlistMess.add(\"\"\""+ getDataMessageAfterEdit(value, listKey) +"\"\"\")\n\t\t}\n"
 				    }
-				    if(key[key.size() - 1] != ")"){
-				        key = key + ")"
-				    }
-						   
-				    // if statement
-				    policyStr += "\t\tif(" + getDataConditionsAfterEdit(key, listKey) + "){\n"
-				    // message print statement
-				    policyStr += "\t\t\tlistMess.add(\"\"\""+ getDataMessageAfterEdit(value, listKey) +"\"\"\")\n\t\t}\n"
-			        }
-				policyStr += "\t}\n"
-				policyStr += "\tret['message'] = listMess\n"
-				policyStr += "\treturn ret\n}"
+					policyStr += "\t}\n"
+					policyStr += "\tret['message'] = listMess\n"
+					policyStr += "\treturn ret\n}"
 			    }
 	        } else if(type == "subtyped") {
 	            policyStr += "POLICY = {resultData->\n"
@@ -184,8 +192,8 @@ public class ProcessGeneratePolicy {
 	    def newData
 	    while(matcher.find()){
 	    	oldData = matcher.group()
-		newData = matcher.group(1) + "data." + matcher.group(2) + matcher.group(3)
-		stringOfPolicy = stringOfPolicy.replace(oldData, newData)
+			newData = matcher.group(1) + "data." + matcher.group(2) + matcher.group(3)
+			stringOfPolicy = stringOfPolicy.replace(oldData, newData)
 	    }
 	    stringOfPolicy = stringOfPolicy.substring(1, stringOfPolicy.length() -1)
 	    return stringOfPolicy
@@ -218,7 +226,7 @@ public class ProcessGeneratePolicy {
 		return stringOfMessage
 	}
 
-	def static convertListToString (List listData, String concatStr = "|"){
+	def static String convertListToString (List listData, String concatStr = "|"){
 		def strRet = ""
 	 	listData.each {key->
 	  		strRet += key + concatStr
@@ -226,5 +234,6 @@ public class ProcessGeneratePolicy {
 	 	if (strRet != "") {
 	  		strRet = strRet.subSequence(0, strRet.length() - concatStr.length())
 	 	}
+	 	return strRet
 	}
 }
