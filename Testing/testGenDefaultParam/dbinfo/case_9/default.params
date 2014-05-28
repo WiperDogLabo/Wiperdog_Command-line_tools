@@ -1,10 +1,10 @@
 [
     "dbinfo": [
         "@MYSQL": [
-            "dbSid": "information_schema",
-            "dbconnstr": "jdbc:mysql://localhost:3306/information_schema",
-            "user": "root",
-            "dbHostId": "localhost"
+            "dbconnstr": "jdbc:mysql://test_hostname:5433",
+            "user": "test_user",
+            "dbHostId": "test_hostid",
+            "dbSid": "test_sid"
         ],
         "@MSSQL-MSSQLSERVER2008": [
             "dbSid": "MSSQLSERVER2008",
@@ -35,17 +35,11 @@
             "dbconnstr": "jdbc:postgresql://localhost:5432/postgres",
             "user": "postgres",
             "dbHostId": "localhost"
-        ],
-        "HOSTID_TEST-@PGSQL-SID_TEST": [
-            "dbconnstr": "jdbc:postgresql://HOSTNAME_TEST:5433",
-            "user": "THANHPT",
-            "dbHostId": "HOSTID_TEST",
-            "dbSid": "SID_TEST"
         ]
     ],
     "dest": [
         [
-            "file": "test391.txt"
+            "file": "stdout"
         ],
         [
             "mongoDB": "localhost:27017/wiperdog"
@@ -55,8 +49,8 @@
         "ORACLE": [
             "default": "",
             "getData": [
-                "sql": "QUERY_TEST",
-                "append": "APPEND_TEST"
+                "sql": "",
+                "append": ""
             ]
         ],
         "SQLS": [
@@ -113,10 +107,10 @@
     ],
     "dbmsversion": [
         "ORACLE": [
-            "default": "DEFAULT_DBMSVERSION",
+            "default": "",
             "getData": [
-                "sql": "QUERY_DBMSVERSION",
-                "append": "APPEND_DBMSVERSION"
+                "sql": "",
+                "append": ""
             ]
         ],
         "SQLS": [
@@ -143,10 +137,10 @@
     ],
     "dblogdir": [
         "ORACLE": [
-            "default": "DEFAULT_DBLOGDIR",
+            "default": "",
             "getData": [
-                "sql": "QUERY_DBLOGDIR",
-                "append": "APPEND_DBLOGDIR"
+                "sql": "",
+                "append": ""
             ]
         ],
         "SQLS": [

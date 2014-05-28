@@ -35,12 +35,6 @@
             "dbconnstr": "jdbc:postgresql://localhost:5432/postgres",
             "user": "postgres",
             "dbHostId": "localhost"
-        ],
-        "HOSTID_TEST-@PGSQL-SID_TEST": [
-            "dbconnstr": "jdbc:postgresql://HOSTNAME_TEST:5433",
-            "user": "THANHPT",
-            "dbHostId": "HOSTID_TEST",
-            "dbSid": "SID_TEST"
         ]
     ],
     "dest": [
@@ -67,10 +61,10 @@
             ]
         ],
         "MYSQL": [
-            "default": "C:/MySQL/data",
+            "default": "",
             "getData": [
-                "sql": "SELECT @@datadir",
-                "append": ""
+                "sql": "",
+                "append": "test_append"
             ]
         ],
         "POSTGRES": [

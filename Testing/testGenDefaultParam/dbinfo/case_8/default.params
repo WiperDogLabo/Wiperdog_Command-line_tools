@@ -36,16 +36,16 @@
             "user": "postgres",
             "dbHostId": "localhost"
         ],
-        "HOSTID_TEST-@PGSQL-SID_TEST": [
-            "dbconnstr": "jdbc:postgresql://HOSTNAME_TEST:5433",
-            "user": "THANHPT",
-            "dbHostId": "HOSTID_TEST",
-            "dbSid": "SID_TEST"
+        "test_hostid-@MYSQL": [
+            "dbconnstr": "jdbc:mysql://test_hostname:5433",
+            "user": "test_user",
+            "dbHostId": "test_hostid",
+            "dbSid": "test_sid"
         ]
     ],
     "dest": [
         [
-            "file": "test391.txt"
+            "file": "stdout"
         ],
         [
             "mongoDB": "localhost:27017/wiperdog"

@@ -35,17 +35,11 @@
             "dbconnstr": "jdbc:postgresql://localhost:5432/postgres",
             "user": "postgres",
             "dbHostId": "localhost"
-        ],
-        "HOSTID_TEST-@PGSQL-SID_TEST": [
-            "dbconnstr": "jdbc:postgresql://HOSTNAME_TEST:5433",
-            "user": "THANHPT",
-            "dbHostId": "HOSTID_TEST",
-            "dbSid": "SID_TEST"
         ]
     ],
     "dest": [
         [
-            "file": "test391.txt"
+            "file": "stdout"
         ],
         [
             "mongoDB": "localhost:27017/wiperdog"
@@ -55,8 +49,8 @@
         "ORACLE": [
             "default": "",
             "getData": [
-                "sql": "QUERY_TEST",
-                "append": "APPEND_TEST"
+                "sql": "",
+                "append": ""
             ]
         ],
         "SQLS": [
@@ -127,10 +121,10 @@
             ]
         ],
         "MYSQL": [
-            "default": "",
+            "default": "test_default_query",
             "getData": [
-                "sql": "select @@VERSION",
-                "append": ""
+                "sql": "SELECT dbmsversion FROM somewhere",
+                "append": "test_append"
             ]
         ],
         "POSTGRES": [
