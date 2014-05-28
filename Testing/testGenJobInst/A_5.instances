@@ -1,3 +1,18 @@
 [
-    "instance_1": [:]
+    "inst_1": [
+        "schedule": "10i",
+        "params": [
+            "a": 1,
+            "b": 2
+        ]
+    ],
+    "inst_2": [
+        "params": [
+            "a": 3,
+            "b": 4
+        ]
+    ],
+    "inst_3": [
+        "schedule": "30i"
+    ]
 ]
