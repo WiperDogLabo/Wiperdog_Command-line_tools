@@ -14,6 +14,7 @@ def checkExistsInst(mapInstances,instName){
 	}
 	return check
 }
+def shell = new GroovyShell()
 def mapInstances = [:]
 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 println ""
@@ -33,14 +34,12 @@ def instTxt = ""
 if(!instFile.exists()){
 	instFile.createNewFile()
 } else {
-	def shell = new GroovyShell()
 	def currentInstance = shell.evaluate(instFile)
 	if(currentInstance != null && currentInstance != [:])  {
 		mapInstances << currentInstance 
 	}
 }
 def leaveInput = false
-println mapInstances
 while(!leaveInput) {
 	def instName = null
 	def instance = [:]
@@ -52,8 +51,11 @@ while(!leaveInput) {
 		break;
 	} else {
 		if(checkExistsInst(mapInstances,instName)) {
-			print "Instance name exists,please try again !\n" ;
-			continue label1
+			print "Instance name exists,do you want to update ? (y/n) !\n" ;
+			def update = reader.readLine() 
+			if(!update.equalsIgnoreCase("y")) {
+				continue label1
+			}
 		}
 	}
 
@@ -64,35 +66,27 @@ while(!leaveInput) {
 	if(schedule != null && schedule != ""){
 		mapInstances[instName]["schedule"] = schedule
 	}
-	def listParams = []
 	while(true) {
-		print "Enter params (ex: param1=1 , param2=3 ) :" ;
+		print "Enter params (ex: [a:1,b:2] ) :" ;
 		def params =  reader.readLine()
 		if(params != null && !params.equals("")) {
 			try{
-				def tmpListParams = params.split(",")
-			
-			tmpListParams.each{
-				def tmpMap = [:]
-				def tmpSplit = it.split("=");
-				tmpMap[tmpSplit[0]] = tmpSplit[1]
-				listParams.add(tmpMap)
-			}
-			break;
-		   } catch(ArrayIndexOutOfBoundsException ex) {
+				params = shell.evaluate(params)				
+				mapInstances[instName]["params"] = params
+				break;
+		    } catch(Exception ex) {
+		    	ex.printStackTrace()
 		   		println "Incorrect params input ,try again !"
-		   } 
+		    }
 		} else {
 			break;
 		}
 	}
-	if(listParams != []) {
-		mapInstances[instName]["param"] = listParams
-	}
+
 }
 
 def builder = new groovy.json.JsonBuilder(mapInstances)
-def stringToFile = builder.toPrettyString().replace("{","[").replace("}","]")
+def stringToFile = builder.toPrettyString().replaceAll("\\{\\s*\\}","[:]").replace("{","[").replace("}","]")
 instFile.setText(stringToFile)
 println "---------------------------"
 println "Finished! Instance file create at : ${instFile.getCanonicalPath()}"
