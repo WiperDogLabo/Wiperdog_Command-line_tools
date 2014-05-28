@@ -1,1 +1,1 @@
-name: "class_test",concurrency : 1,maxrun : 2,maxwait : 3
+name: "class_test", concurrency: 1, maxrun: 2, maxwait: 3

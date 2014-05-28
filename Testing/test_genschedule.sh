@@ -48,7 +48,7 @@ puts "================"
 # ========= CASE 3 =========
 puts ">>>>> CASE 3: INPUT MISSING JOB NAME (-j parameter): "
 set wiperdogPath  [lindex $argv 0]
-spawn $wiperdogPath/bin/genschedule.sh -f test.job -s 10i
+spawn $wiperdogPath/bin/genschedule.sh -f test.trg -s 10i
 set status 1
 expect {
    "Missing job name !" {
@@ -66,7 +66,7 @@ puts "================="
 # ========= CASE 4 =========
 puts ">>>>> CASE 4: INPUT MISSING SCHEDULE (-s parameter): "
 set wiperdogPath  [lindex $argv 0]
-spawn $wiperdogPath/bin/genschedule.sh -f test.job -j test
+spawn $wiperdogPath/bin/genschedule.sh -f test.trg -j test
 set status 1
 expect {
    "Missing schedule !" {
@@ -80,3 +80,4 @@ if { $status == 0 }  {
    puts "Case 4 :Failed !"
 }
 puts "================="
+

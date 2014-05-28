@@ -1,1 +1,1 @@
-name: "class_B",maxrun : 2,maxwait : 3
+name: "CLASS_A", maxrun: 2, maxwait: 3

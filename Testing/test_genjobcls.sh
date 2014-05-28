@@ -16,9 +16,9 @@ set source_file testGenJobCls/A.cls
 set dest_file  $wiperdogPath/var/job/A.cls
 catch { exec rm $dest_file } errorCode
 spawn $wiperdogPath/bin/genjobcls.sh
-expect "Enter job file name:"
+expect "Enter job class file name:"
 send "A\r"
-expect "Enter job class name (*) :"
+expect "Enter job class name (*): "
 send "class_test\r"
 expect "Enter job concurrency :"
 send "1\r"
@@ -46,9 +46,9 @@ set dest_file  $wiperdogPath/var/job/A_2.cls
 catch { exec rm $dest_file } errorCode
 
 spawn $wiperdogPath/bin/genjobcls.sh
-expect "Enter job file name:"
+expect "Enter job class file name:"
 send "A_2\r"
-expect "Enter job class name (*) :"
+expect "Enter job class name (*): "
 send "class_test\r"
 expect "Enter job concurrency :"
 send "1\r"
@@ -75,9 +75,9 @@ set source_file testGenJobCls/A_3.cls
 set dest_file  $wiperdogPath/var/job/A_3.cls
 catch { exec rm $dest_file } errorCode
 spawn $wiperdogPath/bin/genjobcls.sh
-expect "Enter job file name:"
+expect "Enter job class file name:"
 send "A_3\r"
-expect "Enter job class name (*) :"
+expect "Enter job class name (*): "
 send "class_test\r"
 expect "Enter job concurrency :"
 send "1\r"
@@ -104,9 +104,9 @@ set source_file testGenJobCls/A_4.cls
 set dest_file  $wiperdogPath/var/job/A_4.cls
 catch { exec rm $dest_file } errorCode
 spawn $wiperdogPath/bin/genjobcls.sh
-expect "Enter job file name:"
+expect "Enter job class file name:"
 send "A_4\r"
-expect "Enter job class name (*) :"
+expect "Enter job class name (*): "
 send "class_test\r"
 expect "Enter job concurrency :"
 send "1\r"
@@ -133,9 +133,9 @@ set source_file testGenJobCls/A_5.cls
 set dest_file  $wiperdogPath/var/job/A_5.cls
 catch { exec rm $dest_file } errorCode
 spawn $wiperdogPath/bin/genjobcls.sh
-expect "Enter job file name:"
+expect "Enter job class file name:"
 send "A_5\r"
-expect "Enter job class name (*) :"
+expect "Enter job class name (*): "
 send "CLASS_A\r"
 expect "Enter job concurrency :"
 send "1\r"
@@ -146,10 +146,10 @@ send "\r"
 expect "nothing"
 sleep 1
 spawn $wiperdogPath/bin/genjobcls.sh
-expect "Enter job file name:"
+expect "Enter job class file name:"
 send "A_5\r"
-expect "Enter job class name (*) :"
-send "CLASS_B\r"
+expect "Enter job class name (*): "
+send "CLASS_A\r"
 expect "Enter job concurrency :"
 send "\r"
 expect "Enter job max run time :"
