@@ -5,8 +5,8 @@ if {$::argc == 0} {
    puts "Usage: ./test_deployjob.sh /wiperdog_home_path"
    exit
 }
-puts "#Prepare: Please Create & deploy a test bundle to maven local repository before running testcase"
-puts "Resource file in testDeployJob/test_deployjob "
+puts "#Prepare: Please Create & deploy a test bundle to maven local repository & start wiperdog before running testcase"
+puts "Resource file to packaging test bundle located in testDeployJob/test_deployjob "
 
 puts "++++++++++++++++++++++++++"
 puts "Test tools 'deployjob'"
@@ -20,10 +20,10 @@ puts "#Case1: Input all require data & install selected file: "
 set listDelJob [glob -nocomplain $job_dir/*]
 set listDelTmp [glob -nocomplain $tmp_dir/*]
 foreach name $listDelJob {
-	file delete $name
+	file delete -force $name
 }
 foreach name $listDelTmp {
-	file delete $name
+	file delete -force $name
 }
 
 spawn $wiperdogPath/bin/deployjob.sh
@@ -42,7 +42,7 @@ sleep 3
 set assert1 [file exist $tmp_dir/A.job]
 set assert2 [file exist $tmp_dir/B.job]
 set assert3 [file exist $tmp_dir/C.job]
-expect "Enter 'all' for install all files:  Left empty for exit ."
+expect "Enter 'all' for install all files:  Left empty for exit : "
 send "1 2\r"
 expect " "
 sleep 3
@@ -86,7 +86,7 @@ sleep 3
 set assert1 [file exist $tmp_dir/A.job]
 set assert2 [file exist $tmp_dir/B.job]
 set assert3 [file exist $tmp_dir/C.job]
-expect "Enter 'all' for install all files:  Left empty for exit ."
+expect "Enter 'all' for install all files:  Left empty for exit : "
 send "all\r"
 expect " "
 sleep 3
@@ -176,7 +176,7 @@ expect "Enter Rest post (default is : 8089): "
 send "\r"
 sleep 3
 #check if file downloaded and extract to tmp/job
-expect "Enter 'all' for install all files:  Left empty for exit ."
+expect "Enter 'all' for install all files:  Left empty for exit : "
 send "1\r"
 sleep 3
 #check if selected file installed in var/job
@@ -187,7 +187,7 @@ set assert4 0
 set assert5 0
 set assert5 0
 expect { 
-	"Enter 'all' for install all files:  Left empty for exit ." {
+	"Enter 'all' for install all files:  Left empty for exit : " {
 		set assert4 1
 		send "2\r"
 		sleep 1
@@ -196,7 +196,7 @@ expect {
 		set assert7 [file exist $job_dir/C.job]
 	}
 }
-expect "Enter 'all' for install all files:  Left empty for exit ."
+expect "Enter 'all' for install all files:  Left empty for exit : "
 send "\r"
 if {$assert1 == 0 && $assert2 == 1  && $assert3 == 0 && $assert4 == 1 && $assert5 == 0 && $assert6 == 1 && $assert7 == 1} {
 	puts "Case 4 : Success ! "
@@ -232,7 +232,7 @@ expect "Enter Rest post (default is : 8089): "
 send "\r"
 sleep 3
 #check if file downloaded and extract to tmp/job
-expect "Enter 'all' for install all files:  Left empty for exit ."
+expect "Enter 'all' for install all files:  Left empty for exit : "
 send "4\r"
 set assert1 0
 expect {

@@ -6,6 +6,10 @@ Command line tools for wiperdog, (tools should be located at $Wiperdog_HOME/bin)
 	- genjobcls : Creat/update for job class file
 	- genjobinst : Creat/update for job instances file
 	- genjobparam : Creat/update job param file
+	- gendefaultparam: update default.params
+	- deployjob : Deploy job 
+	- genpolicy : Create/update policy
+	
 	
  + Testing/ : 
 	- Script test for command-line tools
