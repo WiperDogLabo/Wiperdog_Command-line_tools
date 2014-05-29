@@ -10,7 +10,6 @@ puts "TEST TOOLS 'genpolicy'"
 puts "++++++++++++++++++++++++++"
 puts "Importing testing data to mongo..."
 set status [catch { exec mongorestore testGenPolicy/wiperdog } result]
-puts $status
 puts "Import done !"
 set wiperdogPath  [lindex $argv 0]
 
@@ -144,6 +143,7 @@ if {$status == 0} {
 # set assert1 1
 # expect  {
 # 	"Group is incorrent, please re-enter:" {
+# 		send "NOT_AVAILABLE\r"
 # 		set assert1 0
 		
 # 	}
@@ -206,18 +206,22 @@ if {$status == 0} {
 # send "\r"
 # set assert1 1
 # expect {
-# 	expect "Enter Condition (a > 3): "
-# 	set assert1 0
-# 	send "require condition\r"
+# 	 "Condition can not be empty, please re-enter: " {
+# 		send "require condition\r"
+# 		set assert1 0
+# 	}
+
 # }
 
 # expect "Enter Message: "
 # send "\r"
 # set assert2 1
 # expect {
-# 	expect "Enter Message: "
-# 	set assert1 0
-# 	send "require message\r"
+# 	 "Message can not be empty, please re-enter: " {
+# 		set assert1 0
+# 		send "require message\r"
+# 	}
+
 # }
 
 # expect "Do you want add condition (y|Y|n|N) ?"

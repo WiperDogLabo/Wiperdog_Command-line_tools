@@ -1,15 +1,15 @@
 POLICY = {resultData->
- def listMess = []
- def ret = ['jobName' : 'MySQL.Database_Area.Top30Database', 'istIid' : 'localhost-@MYSQL-information_schema']
- resultData.each {key,value ->
-  if(key == "M") {
-   value.each {data ->
-    if((data.DataFreeSize < 100)){
-     listMess.add([level: 1, message: """Database free size is low"""])
-    }
-   }
-  }
- }
- ret['message'] = listMess
- return ret
+	def listMess = []
+	def ret = ['jobName' : 'MySQL.Database_Area.Top30Database', 'istIid' : 'localhost-@MYSQL-information_schema']
+	resultData.each {key,value ->
+		if(key == "M") {
+			value.each {data ->
+				if(data.DataFreeSize < 100){
+					listMess.add([level: 1, message: """Database free size is low"""])
+				}
+			}
+		}
+	}
+	ret['message'] = listMess
+	return ret
 }

@@ -1,14 +1,14 @@
 POLICY = {resultData->
- def listMess = []
- def ret = ['jobName' : 'MySQL.Performance.InnoDBIOStatus', 'istIid' : 'localhost-@MYSQL-information_schema']
- resultData.each{data->
-  if((data.ReadsCnt > 100)){
-   listMess.add([level: 1, message: """Read count is so high"""])
-  }
-  if((data.WritesCnt > 100)){
-   listMess.add([level: 2, message: """Write count is so high"""])
-  }
- }
- ret['message'] = listMess
- return ret
+	def listMess = []
+	def ret = ['jobName' : 'MySQL.Performance.InnoDBIOStatus', 'istIid' : 'localhost-@MYSQL-information_schema']
+	resultData.each{data->
+		if((data.WritesCnt > 100)){
+			listMess.add([level: 2, message: """Write count is so high"""])
+		}
+		if((data.ReadsCnt > 100)){
+			listMess.add([level: 2, message: """Read count is so high"""])
+		}
+	}
+	ret['message'] = listMess
+	return ret
 }
