@@ -44,9 +44,16 @@ public class ProcessGenDefaultParam {
 			}
 			print "Enter Host ID (*): "
 			hostId = reader.readLine()
-			while (hostId == "") {
-				println "Host ID cannot be empty. Please re-enter: "
+			while (hostId == "" || hostId.contains(".")) {
+				if(hostId == "" ) {
+					println "Host ID cannot be empty. Please re-enter: "
+				} else {
+					if(hostId.contains(".")) {
+						println "Host ID cannot contains '.' character. Please re-enter: "
+					}
+				}
 				hostId = reader.readLine()
+				
 			}
 			print "Enter Host Name (*): "
 			hostName = reader.readLine()
@@ -77,7 +84,7 @@ public class ProcessGenDefaultParam {
 			print "Set Sid as a DBinfo element (y|Y|n|N): "
 			sidik = reader.readLine()
 			while (sidik != "y" && sidik != "Y" && sidik != "n" && sidik != "N") {
-				print "Set host ID as a DBinfo element (y|Y|n|N): "
+				print "Set Sid as a DBinfo element (y|Y|n|N): "
 				sidik = reader.readLine()
 			}
 

@@ -4,15 +4,18 @@ POLICY = {resultData->
 	resultData.each {key,value ->
 		if(key == "M") {
 			value.each {data ->
-				if(data.DataFreeSize < 100){
-					listMess.add([level: 1, message: """Database free size is low"""])
+				if(original_condition){
+					listMess.add([level: null, message: """original_message"""])
+				}
+				if(update_condition){
+					listMess.add([level: 1, message: """update_message"""])
 				}
 			}
 		}
 		if(key == "D") {
 			value.each {data ->
-				if(data.UsedDataPct > 100){
-					listMess.add([level: 1, message: """Used data size is hight"""])
+				if(update_condition_2){
+					listMess.add([level: 3, message: """update_message_2"""])
 				}
 			}
 		}
