@@ -1,111 +1,231 @@
 #!/usr/bin/expect
 #!/bin/bash
+if {$::argc == 0} {
+   puts "Incorrect parameter !"
+   puts "Usage: ./test_genjobinst.sh /wiperdog_home_path"
+   exit
+}
 puts "++++++++++++++++++++++++++"
 puts "TEST TOOLS 'genpolicy'"
 puts "++++++++++++++++++++++++++"
+puts "Importing testing data to mongo..."
+set status [catch { exec mongorestore testGenPolicy/wiperdog } result]
+puts $status
+puts "Import done !"
+set wiperdogPath  [lindex $argv 0]
 
 puts ">>>>> CASE 1: GENERATE POLICY FOR JOB STORE <<<<<"
-
-set wiperdogPath  [lindex $argv 0]
-set source_file testGenPolicy/job391.store.policy
-set dest_file  $wiperdogPath/var/job/policy/job391.store.policy
+set source_file testGenPolicy/case_1/MySQL.Performance.InnoDBIOStatus.localhost-@MYSQL-information_schema.policy
+set dest_file  $wiperdogPath/var/job/policy/MySQL.Performance.InnoDBIOStatus.localhost-@MYSQL-information_schema.policy
 catch { exec rm $dest_file } errorCode
 spawn $wiperdogPath/bin/genpolicy.sh
 
 # Auto enter data
 expect "Enter Job Name: "
-send "job391.store\r"
+send "MySQL.Performance.InnoDBIOStatus\r"
 expect "Enter IstIid: "
-send "\r"
-expect "Job is store or subtyped (store|subtyped): "
-send "store\r"
-expect "Enter list key data: (a, b, c, ...): "
-send "schemaname, tablename, tablesize, rowcount\r"
-expect "Enter Level (1:Low, 2:Medium, 3:High): "
-send "2\r"
+send "localhost-@MYSQL-information_schema\r"
+expect "Enter Level (Low|Medium|High):"
+send "Medium\r"
 expect "Enter Condition (a > 3): "
-send "tablesize > 1000\r"
+send "WritesCnt > 100\r"
 expect "Enter Message: "
-send "Size of table is too high\r"
+send "Write count is so high\r"
 expect "Do you want add condition (y|Y|n|N) ?"
 send "y\r"
-expect "Enter Level (1:Low, 2:Medium, 3:High): "
-send "3\r"
+expect "Enter Level (Low|Medium|High):"
+send "Medium\r"
 expect "Enter Condition (a > 3): "
-send "rowcount > 2014\r"
+send "ReadsCnt > 100\r"
 expect "Enter Message: "
-send "Warning !!!\r"
+send "Read count is so high\r"
 expect "Do you want add condition (y|Y|n|N) ?"
 send "n\r"
-expect "nothing"
-sleep 1
-
-#After file written , check content with efxpected file
+expect eof
 set status [catch {exec diff "$source_file" "$dest_file"} result]
-puts "=================="
 if {$status == 0} {
-   puts "CASE 1 SUCCESS !!!\r"
+	puts "Case 1: Success "
 } else {
-   puts "CASE 1 FAILED !!!\r"
+	puts "Case 1: Failed"
 }
-puts "=================="
+# puts ">>>>> CASE 2: GENERATE POLICY FOR JOB SUBTYPE <<<<<"
+# set source_file testGenPolicy/case_2/MySQL.Database_Area.Top30Database.localhost-@MYSQL-information_schema.policy
+# set dest_file  $wiperdogPath/var/job/policy/MySQL.Database_Area.Top30Database.localhost-@MYSQL-information_schema.policy
+# catch { exec rm $dest_file } errorCode
+# spawn $wiperdogPath/bin/genpolicy.sh
 
-puts ">>>>> CASE 2: GENERATE POLICY FOR JOB SUBTYPED <<<<<"
+# # Auto enter data
+# expect "Enter Job Name: "
+# send "MySQL.Database_Area.Top30Database\r"
+# expect "Enter IstIid: "
+# send "localhost-@MYSQL-information_schema\r"
+# expect "Enter Group: "
+# send "M\r"
+# expect "Enter Level (Low|Medium|High):"
+# send "Low\r"
+# expect "Enter Condition (a > 3): "
+# send "DataFreeSize < 100\r"
+# expect "Enter Message: "
+# send "Database free size is low\r"
+# expect "Do you want add condition (y|Y|n|N) ?"
+# send "n\r"
+# expect eof
+# set status [catch {exec diff "$source_file" "$dest_file"} result]
+# if {$status == 0} {
+# 	puts "Case 2: Success "
+# } else {
+# 	puts "Case 2: Failed"
+# }
 
-set wiperdogPath  [lindex $argv 0]
-set source_file testGenPolicy/job391.subtyped.policy
-set dest_file  $wiperdogPath/var/job/policy/job391.subtyped.policy
-catch { exec rm $dest_file } errorCode
-spawn $wiperdogPath/bin/genpolicy.sh
+# puts ">>>>> CASE 3: Enter job name && IstIid empty or not available <<<<<"
+# set source_file testGenPolicy/case_3/MySQL.Database_Area.Top30Database.localhost-@MYSQL-information_schema.policy
+# set dest_file  $wiperdogPath/var/job/policy/MySQL.Database_Area.Top30Database.localhost-@MYSQL-information_schema.policy
+# catch { exec rm $dest_file } errorCode
+# spawn $wiperdogPath/bin/genpolicy.sh
 
-# Auto enter data
-expect "Enter Job Name: "
-send "job391.subtyped\r"
-expect "Enter IstIid: "
-send "\r"
-expect "Job is store or subtyped (store|subtyped): "
-send "subtyped\r"
-expect "Enter list key data: (a, b, c, ...): "
-send "DatabaseNm, UsedDataSize, UsedIndexSize, DataFreeSize, UsedSize, TotalSize\r"
-expect "Enter Group: "
-send "M\r"
-expect "Enter Level (1:Low, 2:Medium, 3:High): "
-send "1\r"
-expect "Enter Condition (a > 3): "
-send "UsedSize > 9500000\r"
-expect "Enter Message: "
-send "UsedSize is too high\r"
-expect "Do you want add condition (y|Y|n|N) ?"
-send "y\r"
-expect "Enter Group: "
-send "M\r"
-expect "Enter Level (1:Low, 2:Medium, 3:High): "
-send "2\r"
-expect "Enter Condition (a > 3): "
-send "UsedIndexSize > 100000\r"
-expect "Enter Message: "
-send "okeeeeeeeee\r"
-expect "Do you want add condition (y|Y|n|N) ?"
-send "y\r"
-expect "Enter Group: "
-send "D\r"
-expect "Enter Level (1:Low, 2:Medium, 3:High): "
-send "3\r"
-expect "Enter Condition (a > 3): "
-send "TotalSize != 3000\r"
-expect "Enter Message: "
-send "show is ok\r"
-expect "Do you want add condition (y|Y|n|N) ?"
-send "n\r"
-expect "nothing"
-sleep 1
+# # Auto enter data
+# expect "Enter Job Name: "
+# send "NOT_AVAILABLE\r"
+# expect "Enter IstIid: "
+# send "NOT_AVAILABLE\r"
+# set assert1 1
+# expect {
+# 	"This job is not exists, please re-enter !!!" {
+# 		set assert1 0
+# 	}
+	
+# }
+# expect "Enter Job Name: "
+# send "\r"
+# expect "Enter IstIid: "
+# send "\r"
+# set assert2 1
+# expect {
+# 	"This job is not exists, please re-enter !!!" {
+# 		set assert2 0
+# 	}
+	
+# }
+# expect "Enter Job Name: "
+# send "MySQL.Database_Area.Top30Database\r"
+# expect "Enter IstIid: "
+# send "localhost-@MYSQL-information_schema\r"
+# expect "Enter Group: "
+# send "M\r"
+# expect "Enter Level (Low|Medium|High):"
+# send "Low\r"
+# expect "Enter Condition (a > 3): "
+# send "DataFreeSize < 100\r"
+# expect "Enter Message: "
+# send "Database free size is low\r"
+# expect "Do you want add condition (y|Y|n|N) ?"
+# send "n\r"
+# expect eof
+# set status [catch {exec diff "$source_file" "$dest_file"} result]
+# if {$status == 0 && $assert1 == 0 && $assert2 == 0} {
+# 	puts "Case 3: Success "
+# } else {
+# 	puts "Case 3: Failed"
+# }
 
-#After file written , check content with efxpected file
-set status [catch {exec diff "$source_file" "$dest_file"} result]
-puts "=================="
-if {$status == 0} {
-   puts "CASE 2 SUCCESS !!!\r"
-} else {
-   puts "CASE 2 FAILED !!!\r"
-}
-puts "=================="
+# puts ">>>>> CASE 4: Enter group && level empty or not available <<<<<"
+# set source_file testGenPolicy/case_4/MySQL.Database_Area.Top30Database.localhost-@MYSQL-information_schema.policy
+# set dest_file  $wiperdogPath/var/job/policy/MySQL.Database_Area.Top30Database.localhost-@MYSQL-information_schema.policy
+# catch { exec rm $dest_file } errorCode
+
+# spawn $wiperdogPath/bin/genpolicy.sh
+# # Auto enter data
+# expect "Enter Job Name: "
+# send "MySQL.Database_Area.Top30Database\r"
+# expect "Enter IstIid: "
+# send "localhost-@MYSQL-information_schema\r"
+# expect "Enter Group: "
+# send "\r"
+# set assert1 1
+# expect  {
+# 	"Group is incorrent, please re-enter:" {
+# 		set assert1 0
+		
+# 	}
+
+# }
+# set assert2 1
+# expect {
+# 	"Group is incorrent, please re-enter:" {
+# 		send "M\r"
+# 		set assert2 0
+# 	}	
+# } 
+
+# expect "Enter Level (Low|Medium|High):"
+# send "\r"
+# set assert3 1
+# expect {
+# 	"Please choose level for policy:" {
+# 		set assert3 0
+# 		send "NOT_AVAILABLE\r"		
+# 	}
+# }
+# set assert4 1
+# expect {
+# 	"Please choose level for policy:" {
+# 		set assert4 0
+# 		send "Low\r"
+# 	}
+# }
+# expect "Enter Condition (a > 3): "
+# send "DataFreeSize < 100\r"
+# expect "Enter Message: "
+# send "Database free size is low\r"
+# expect "Do you want add condition (y|Y|n|N) ?"
+# send "n\r"
+# expect eof
+# set status [catch {exec diff "$source_file" "$dest_file"} result]
+# if {$status == 0 && $assert1 == 0 && $assert2 == 0 && $assert3 == 0 && $assert4 == 0} {
+# 	puts "Case 4: Success "
+# } else {
+# 	puts "Case 4: Failed"
+# }
+
+# puts ">>>>> CASE 5: Enter condition && message empty"
+# set source_file testGenPolicy/case_5/MySQL.Database_Area.Top30Database.localhost-@MYSQL-information_schema.policy
+# set dest_file  $wiperdogPath/var/job/policy/MySQL.Database_Area.Top30Database.localhost-@MYSQL-information_schema.policy
+# catch { exec rm $dest_file } errorCode
+
+# spawn $wiperdogPath/bin/genpolicy.sh
+# # Auto enter data
+# expect "Enter Job Name: "
+# send "MySQL.Database_Area.Top30Database\r"
+# expect "Enter IstIid: "
+# send "localhost-@MYSQL-information_schema\r"
+# expect "Enter Group: "
+# send "M\r"
+# expect "Enter Level (Low|Medium|High):"
+# send "Low\r"
+# expect "Enter Condition (a > 3): "
+# send "\r"
+# set assert1 1
+# expect {
+# 	expect "Enter Condition (a > 3): "
+# 	set assert1 0
+# 	send "require condition\r"
+# }
+
+# expect "Enter Message: "
+# send "\r"
+# set assert2 1
+# expect {
+# 	expect "Enter Message: "
+# 	set assert1 0
+# 	send "require message\r"
+# }
+
+# expect "Do you want add condition (y|Y|n|N) ?"
+# send "n\r"
+# expect eof
+# set status [catch {exec diff "$source_file" "$dest_file"} result]
+# if {$status == 0 && $assert1 == 0 && $assert2 == 0 && $assert3 == 0 && $assert4 == 0} {
+# 	puts "Case 5: Success "
+# } else {
+# 	puts "Case 5: Failed"
+# }
