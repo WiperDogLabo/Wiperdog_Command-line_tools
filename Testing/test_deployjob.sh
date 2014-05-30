@@ -43,15 +43,15 @@ set assert1 [file exist $tmp_dir/A.job]
 set assert2 [file exist $tmp_dir/B.job]
 set assert3 [file exist $tmp_dir/C.job]
 expect "Enter 'all' for install all files:  Left empty for exit : "
-send "1 2\r"
-expect " "
+send "0\r"
+expect "Enter 'all' for install all files:  Left empty for exit : "
+send "\r"
+expect eof
 sleep 3
 #check if selected file installed in var/job
-set assert4 [file exist $job_dir/A.job]
-set assert5 [file exist $job_dir/B.job]
-set assert6 [file exist $job_dir/C.job]
+set assert4 [file exist $job_dir/.job]
 
-if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1 && $assert4 == 0 && $assert5 == 1 && $assert6 == 1} {
+if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1 && $assert4 == 0 } {
 	puts "Case 1 : Success ! "
 } else {
 	puts "Case 1 : Failed !"
@@ -86,9 +86,12 @@ sleep 3
 set assert1 [file exist $tmp_dir/A.job]
 set assert2 [file exist $tmp_dir/B.job]
 set assert3 [file exist $tmp_dir/C.job]
+sleep 3
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "all\r"
-expect " "
+expect "Enter 'all' for install all files:  Left empty for exit : "
+send "\r"
+expect eof
 sleep 3
 #check if selected file installed in var/job
 set assert4 [file exist $job_dir/A.job]
@@ -136,12 +139,21 @@ expect {
 set asser3  0
 expect "Enter bundle version: "
 send "\r"
+
+
 expect {
 	"Enter bundle version: "  {
-		set assert2  1
+		set assert3  1
 		send "1.0\r"
 	}
 }
+expect "Enter wiperdog host (default is : \"localhost\"):"
+send "\r"
+expect "Enter Rest post (default is : 8089): "
+send "\r"
+expect "Enter 'all' for install all files:  Left empty for exit : "
+send "\r"
+expect eof
 
 if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1} {
 	puts "Case 3 : Success ! "
@@ -181,8 +193,8 @@ send "1\r"
 sleep 3
 #check if selected file installed in var/job
 set assert1 [file exist $job_dir/A.job]
-set assert2 [file exist $job_dir/B.job]
-set assert3 [file exist $job_dir/C.job]
+set assert2 [file exist $job_dir/C.job]
+set assert3 [file exist $job_dir/B.job]
 set assert4 0
 set assert5 0
 set assert5 0
@@ -192,12 +204,13 @@ expect {
 		send "2\r"
 		sleep 1
 		set assert5 [file exist $job_dir/A.job]
-		set assert6 [file exist $job_dir/B.job]
-		set assert7 [file exist $job_dir/C.job]
+		set assert6 [file exist $job_dir/C.job]
+		set assert7 [file exist $job_dir/B.job]
 	}
 }
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "\r"
+expect eof
 if {$assert1 == 0 && $assert2 == 1  && $assert3 == 0 && $assert4 == 1 && $assert5 == 0 && $assert6 == 1 && $assert7 == 1} {
 	puts "Case 4 : Success ! "
 } else {
@@ -240,6 +253,9 @@ expect {
 		set assert1 1
 	}
 }
+expect "Enter 'all' for install all files:  Left empty for exit :"
+send "\r"
+expect eof
 if {$assert1 == 1 } {
 	puts "Case 5 : Success ! "
 } else {
