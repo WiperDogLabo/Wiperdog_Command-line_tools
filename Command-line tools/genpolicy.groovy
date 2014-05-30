@@ -37,6 +37,10 @@ public class ProcessGeneratePolicy {
 			HOMEPATH = args[0]
 		}
 		POLICY_DIR = HOMEPATH.replace("bin", "/var/job/policy")
+		def folderPolicy = new File(POLICY_DIR)
+		if (!folderPolicy.exists()) {
+			folderPolicy.mkdirs()
+		}
 		def mongo = new GMongo("localhost", 27017)
 		def dbConn = mongo.getDB("wiperdog")
 		def lstJobMongo = dbConn.getCollectionNames()
