@@ -151,11 +151,13 @@ public class ProcessGenDefaultParam {
 				}
 			} else if (action == "delete") {
 				def removeIndex
+				def destRm = [:]
 				print "Enter delete key: "
 				keyDest = reader.readLine()
 				def checkExitsKeyDest = false
 				mapDefaultParams['dest'].eachWithIndex {eDest, indexRm ->
 					if (eDest[keyDest] != null) {
+						destRm[keyDest] = eDest[keyDest]
 						checkExitsKeyDest = true
 						removeIndex = indexRm
 					}
@@ -165,12 +167,13 @@ public class ProcessGenDefaultParam {
 					keyDest = reader.readLine()
 					mapDefaultParams['dest'].each {eDest ->
 						if (eDest[keyDest] != null) {
+							destRm[keyDest] = eDest[keyDest]
 							checkExitsKeyDest = true
 						}
 					}
 				}
 				if (checkExitsKeyDest) {
-					mapDefaultParams['dest'].remove(removeIndex)
+					def iterator = mapDefaultParams['dest'].remove(destRm)
 				}
 			}
 		} else if (keyRoot == "datadirectory") {

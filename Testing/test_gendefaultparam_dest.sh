@@ -153,7 +153,9 @@ if {$status == 0 && $assert1 == 0} {
 
 puts "---------------------------------------------"
 set source_file testGenDefaultParam/dest/case_8/default.params
-file copy -force $orgin_param $wiperdogPath/var/conf
+set orgin_param_other testGenDefaultParam/original/other/default.params
+
+file copy -force $orgin_param_other $wiperdogPath/var/conf
 puts "#Case 8: Test dest edit - Delete dest not available "
 spawn $wiperdogPath/bin/gendefaultparam.sh dest
 expect "*** Do you want (add|delete) dest? " 
@@ -167,11 +169,14 @@ expect {
 	set assert1 0
 	}
 }
+expect " "
 expect eof
 #After file written , check content with expected file
 set status [catch {exec diff "$source_file" "$dest_file"} result]
 if {$status == 0 && $assert1 == 0} {
    puts "Case 8 Success !\r"
 } else {
+   puts $status
+   puts $assert1
    puts "Case 8 Failed ! \r"
 } 
