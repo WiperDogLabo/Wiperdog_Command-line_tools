@@ -39,7 +39,7 @@
     ],
     "dest": [
         [
-            "http":"http://localhost:13111/wiperdog"
+            "http": "http://localhost:13111/wiperdog"
         ],
         [
             "mongoDB": "localhost:27017/wiperdog"
