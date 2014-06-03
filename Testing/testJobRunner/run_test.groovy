@@ -63,18 +63,25 @@ public class TestJobRunner{
 			listCmd.add("/bin/bash")
 			listCmd.add("jobrunner.sh")
 			listCmd.add("-f")
-			listCmd.add("var/job/" + jobTest)
+			// add schedule
 			if (caseTest == "Case8") {
+				// run job with default path var/job
+				listCmd.add(jobTest)
 				listCmd.add("-s")
 				listCmd.add("5")
-			} else if (caseTest == "Case2" && caseTest == "Case9") {
+			} else if (caseTest == "Case2" || caseTest == "Case9") {
+				// run job with absolute path
+				listCmd.add(toFolder + jobTest)
 				listCmd.add("-s")
 				listCmd.add("10i")
 			} else if (caseTest == "Case10") {
 				listCmd.add("-s")
 				listCmd.add("0/10 * * * * ?")
+			} else {
+				// run job with relative path
+				listCmd.add("var/job/" + jobTest)
 			}
-			// set dir for process
+			// set dir to run jobrunner
 			dir = new File(System.getProperty("user.dir"))
 			// get output when run command
 			println listCmd
