@@ -1,0 +1,9 @@
+JOB = [name: "TestJob_10"]
+
+FETCHACTION = {
+	def resultData = "Message test for Job_10!!!"
+	return resultData
+}
+
+SENDTYPE = "Store"
+DEST = parameters.dest
