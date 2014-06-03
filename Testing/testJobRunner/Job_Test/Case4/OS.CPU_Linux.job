@@ -124,4 +124,4 @@ SENDTYPE = "Store"
 RESOURCEID = "Linux/CPU"
 DEST = parameters.dest
 OSINFO = parameters.osinfo
-MONITORINGTYPE = 'OS'
+MONITORINGTYPE = '@OS'
