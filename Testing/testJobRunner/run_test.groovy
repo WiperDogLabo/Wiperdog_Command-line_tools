@@ -121,14 +121,14 @@ public class TestJobRunner{
 			} else if (caseTest == "Case5") {
 				// Test job processing with GROUPKEY + ACCUMULATE + FINALLY
 				println output
-				if (output.contains("\"Name\" : \"thanhmx\"") && output.contains("\"Count\": 100") && output.contains("\"Count\": 120")) {
+				if (output.contains("\"Name\": \"thanhmx\"") && output.contains("\"Count\": 100") && output.contains("\"Count\": 120")) {
 					println "====Test successfully!!!===="
 				} else {
 					println "====Test failed!!!===="
 				}
 			} else if (caseTest == "Case6") {
 				// Test job processing with data Subtyped
-				if (output.contains("\"Message\" : \"Group D!\"") && output.contains("\"Message\" : \"Group M!\"")) {
+				if (output.contains("\"Message\": \"Group D!\"") && output.contains("\"Message\": \"Group M!\"")) {
 					println "====Test successfully!!!===="
 				} else {
 					println "====Test failed!!!===="
