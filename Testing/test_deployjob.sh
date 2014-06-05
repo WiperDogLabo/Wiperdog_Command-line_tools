@@ -49,15 +49,24 @@ send "\r"
 expect eof
 sleep 3
 #check if selected file installed in var/job
-set assert4 [file exist $job_dir/.job]
-
-if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1 && $assert4 == 0 } {
+set assert4 [file exist $tmp_dir/A.job]
+set assert5 [file exist $tmp_dir/B.job]
+set assert6 [file exist $tmp_dir/C.job]
+set assert7 0
+if { $assert4 == 0 } {
+	set assert7 [file exist $job_dir/A.job]
+} elseif { $assert5 == 0 } {
+	set assert7 [file exist $job_dir/B.job]
+} elseif { $assert6 == 0 } {
+	set assert7 [file exist $job_dir/C.job]
+}
+puts "================="
+if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1 && $assert7 == 1 } {
 	puts "Case 1 : Success ! "
 } else {
 	puts "Case 1 : Failed !"
 }
-
-puts "--------------------------------------------------------"
+puts "=================\n"
 
 puts "#Case2: Input all require data & install all file: "
 set listDelJob [glob -nocomplain $job_dir/*]
@@ -97,13 +106,14 @@ sleep 3
 set assert4 [file exist $job_dir/A.job]
 set assert5 [file exist $job_dir/B.job]
 set assert6 [file exist $job_dir/C.job]
-
+puts "================="
 if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1 && $assert4 == 1 && $assert5 == 1 && $assert6 == 1} {
 	puts "Case 2 : Success ! "
 } else {
 	puts "Case 2 : Failed !"
 }
-puts "---------------------------------------------------"
+puts "=================\n"
+
 puts "#Case3: Input missing require data : "
 puts "Object : When missing require data ,user will be prompt to re-enter !"
 #Remove all file in var/job & tmp/job before test
@@ -154,14 +164,13 @@ send "\r"
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "\r"
 expect eof
-
+puts "================="
 if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1} {
 	puts "Case 3 : Success ! "
 } else {
 	puts "Case 3 : Failed !"
 }
-
-puts "--------------------------------------------------------"
+puts "=================\n"
 
 puts "#Case4: Repeat install multi times at one time the deployjob start: "
 set listDelJob [glob -nocomplain $job_dir/*]
@@ -187,37 +196,42 @@ send "\r"
 expect "Enter Rest post (default is : 8089): "
 send "\r"
 sleep 3
+set assert1 [file exist $tmp_dir/A.job]
+set assert2 [file exist $tmp_dir/B.job]
+set assert3 [file exist $tmp_dir/C.job]
 #check if file downloaded and extract to tmp/job
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "1\r"
 sleep 3
-#check if selected file installed in var/job
-set assert1 [file exist $job_dir/A.job]
-set assert2 [file exist $job_dir/C.job]
-set assert3 [file exist $job_dir/B.job]
-set assert4 0
-set assert5 0
-set assert5 0
-expect { 
-	"Enter 'all' for install all files:  Left empty for exit : " {
-		set assert4 1
-		send "2\r"
-		sleep 1
-		set assert5 [file exist $job_dir/A.job]
-		set assert6 [file exist $job_dir/C.job]
-		set assert7 [file exist $job_dir/B.job]
-	}
-}
+expect "Enter 'all' for install all files:  Left empty for exit : "
+send "2\r"
+sleep 3
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "\r"
 expect eof
-if {$assert1 == 0 && $assert2 == 1  && $assert3 == 0 && $assert4 == 1 && $assert5 == 0 && $assert6 == 1 && $assert7 == 1} {
+
+set assert4 [file exist $tmp_dir/A.job]
+set assert5 [file exist $tmp_dir/B.job]
+set assert6 [file exist $tmp_dir/C.job]
+set assert7 0
+set assert8 0
+if { $assert4 == 0 && $assert5 == 0 } {
+	set assert7 [file exist $job_dir/A.job]
+	set assert8 [file exist $job_dir/B.job]
+} elseif { $assert5 == 0 && $assert6 == 0 } {
+	set assert7 [file exist $job_dir/B.job]
+	set assert8 [file exist $job_dir/C.job]
+} elseif { $assert6 == 0 && assert4 == 0 } {
+	set assert7 [file exist $job_dir/C.job]
+	set assert8 [file exist $job_dir/A.job]
+}
+puts "================="
+if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1 && $assert7 == 1 && $assert8 == 1} {
 	puts "Case 4 : Success ! "
 } else {
 	puts "Case 4 : Failed !"
 }
-
-puts "--------------------------------------------------------"
+puts "=================\n"
 
 puts "#Case 5: Select file not available to install: "
 puts "#Expect : Message error about invalid selection "
@@ -256,8 +270,10 @@ expect {
 expect "Enter 'all' for install all files:  Left empty for exit :"
 send "\r"
 expect eof
+puts "================="
 if {$assert1 == 1 } {
 	puts "Case 5 : Success ! "
 } else {
 	puts "Case 5 : Failed !"
 }
+puts "=================\n"

@@ -14,7 +14,6 @@ puts ">>>>> CASE 1: INPUT ALL REQUIRE DATA <<<<<"
 set wiperdogPath  [lindex $argv 0]
 set source_file testGenSchedule/test.trg
 set dest_file  $wiperdogPath/var/job/test.trg
-catch { exec rm $dest_file } errorCode
 spawn $wiperdogPath/bin/genschedule.sh -f test.trg -j A -s 10i
 sleep 1
 #After file written , check content with efxpected file
@@ -32,7 +31,6 @@ puts ">>>>> CASE 2: INPUT MISSING JOB FILE NAME (-f parameter): "
 set wiperdogPath  [lindex $argv 0]
 set source_file testGenSchedule/A.trg
 set dest_file  $wiperdogPath/var/job/A.trg
-catch { exec rm $dest_file } errorCode
 spawn $wiperdogPath/bin/genschedule.sh -j A -s 10i
 sleep 1
 #After file written , check content with efxpected file
