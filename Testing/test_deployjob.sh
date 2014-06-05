@@ -55,10 +55,14 @@ set assert6 [file exist $tmp_dir/C.job]
 set assert7 0
 if { $assert4 == 0 } {
 	set assert7 [file exist $job_dir/A.job]
-} elseif { $assert5 == 0 } {
-	set assert7 [file exist $job_dir/B.job]
-} elseif { $assert6 == 0 } {
-	set assert7 [file exist $job_dir/C.job]
+} else{
+	if { $assert5 == 0 } {
+	  set assert7 [file exist $job_dir/B.job]
+        }
+} else {
+	if { $assert6 == 0 } {
+	  set assert7 [file exist $job_dir/C.job]
+        }
 }
 puts "================="
 if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1 && $assert7 == 1 } {
