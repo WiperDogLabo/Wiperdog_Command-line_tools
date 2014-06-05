@@ -5,9 +5,12 @@ A. How to test?
 	./run_test.sh -p /home/mrtit/Wiperdog/1205Wiperdog/ -c Case1  
 - Step2: Check result  
 
-Note: "Case1, Case2, Case3" test job connect to database => Need to config default.params and password file connect to SQLServer, MYSQL, POSTGRES.  
+Note:  
+- "Case1, Case2, Case3" test job connect to database => Need to config default.params and password file connect to SQLServer, MYSQL, POSTGRES.  
+- Test jobrunner use servlet with Case1, Case2, Case3, Case4, Case5, Case6, Case7 and Case11.  
+- Test jobrunner use Grapes with Case1, Case2, Case3, Case4, Case5, Case6, Case7, Case8, Case9 and Case10.  
 
-B. Case test 
+B. Case test  
 
  1. Test connect to SQLServer use QUERY (Case1)  
   - Expected: process job and return data successfully.  
@@ -37,4 +40,7 @@ B. Case test
   - Expected: Return data with message corresponding to jobfile successfully.  
 
  10. Test job processing with schedule is Crontab (Case10)  
-  - Expected: Return data with message corresponding to jobfile successfully.    
+  - Expected: Return data with message corresponding to jobfile successfully.  
+
+ 11. Test get data in wiperdog.log success when job have error (Case11)  
+  - Expected: Return data with message corresponding to jobfile successfully.  

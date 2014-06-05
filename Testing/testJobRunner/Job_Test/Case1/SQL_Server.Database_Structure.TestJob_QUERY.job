@@ -9,7 +9,7 @@
  * @returnParam ProductLevelStr SQL Serverの製品レベル
  * @returnParam EditionStr SQL Serverのエディション
  */
-JOB = [name: "SQL_Server.Database_Structure.Database_Version"]
+JOB = [name: "SQL_Server.Database_Structure.TestJob_QUERY"]
 
 QUERY = '''
 		SELECT 

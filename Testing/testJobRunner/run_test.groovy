@@ -69,7 +69,7 @@ public class TestJobRunner{
 				listCmd.add(jobTest)
 				listCmd.add("-s")
 				listCmd.add("5")
-			} else if (caseTest == "Case2" || caseTest == "Case9") {
+			} else if (caseTest == "Case9") {
 				// run job with absolute path
 				listCmd.add(toFolder + jobTest)
 				listCmd.add("-s")
@@ -162,7 +162,14 @@ public class TestJobRunner{
 				} else {
 					println "====Test failed!!!===="
 				}
-			} 
+			} else if (caseTest == "Case11") {
+				// Test get data in wiperodog.log when job have error
+				if (output.contains("groovy.lang.MissingPropertyException: No such property: mongodb")) {
+					println "====Test successfully!!!===="
+				} else {
+					println "====Test failed!!!===="
+				}
+			}
 		}catch(Exception ex){
 			ex.printStackTrace()
 		}
