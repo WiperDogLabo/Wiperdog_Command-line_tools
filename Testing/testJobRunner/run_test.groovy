@@ -75,6 +75,7 @@ public class TestJobRunner{
 				listCmd.add("-s")
 				listCmd.add("10i")
 			} else if (caseTest == "Case10") {
+				listCmd.add("var/job/" + jobTest)
 				listCmd.add("-s")
 				listCmd.add("0/10 * * * * ?")
 			} else {
@@ -88,7 +89,7 @@ public class TestJobRunner{
 			println "processing..."
 			output = runProcClosure(listCmd, dir, true)
 			sleep(5000)
-
+			println output
 			// check result data
 			if (caseTest == "Case1") {
 				// Test job connect to SQLServer + QUERY
