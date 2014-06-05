@@ -225,7 +225,7 @@ if { $assert4 == 0 && $assert5 == 0 } {
 } elseif { $assert5 == 0 && $assert6 == 0 } {
 	set assert7 [file exist $job_dir/B.job]
 	set assert8 [file exist $job_dir/C.job]
-} elseif { $assert6 == 0 && assert4 == 0 } {
+} elseif { $assert6 == 0 && $assert4 == 0 } {
 	set assert7 [file exist $job_dir/C.job]
 	set assert8 [file exist $job_dir/A.job]
 }
