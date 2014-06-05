@@ -25,7 +25,6 @@ foreach name $listDelJob {
 foreach name $listDelTmp {
 	file delete -force $name
 }
-
 spawn $wiperdogPath/bin/deployjob.sh
 expect "Enter bundle groupId: "
 send "org.wiperdog\r"
@@ -37,8 +36,9 @@ expect "Enter wiperdog host (default is : \"localhost\"):"
 send "\r"
 expect "Enter Rest post (default is : 8089): "
 send "\r"
-sleep 3
+sleep 10
 #check if file downloaded and extract to tmp/job
+
 set assert1 [file exist $tmp_dir/A.job]
 set assert2 [file exist $tmp_dir/B.job]
 set assert3 [file exist $tmp_dir/C.job]
@@ -47,7 +47,7 @@ send "0\r"
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "\r"
 expect eof
-sleep 3
+sleep 10
 #check if selected file installed in var/job
 set assert4 [file exist $tmp_dir/A.job]
 set assert5 [file exist $tmp_dir/B.job]
@@ -90,18 +90,18 @@ expect "Enter wiperdog host (default is : \"localhost\"):"
 send "\r"
 expect "Enter Rest post (default is : 8089): "
 send "\r"
-sleep 3
+sleep 10
 #check if file downloaded and extract to tmp/job
 set assert1 [file exist $tmp_dir/A.job]
 set assert2 [file exist $tmp_dir/B.job]
 set assert3 [file exist $tmp_dir/C.job]
-sleep 3
+sleep 10
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "all\r"
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "\r"
 expect eof
-sleep 3
+sleep 10
 #check if selected file installed in var/job
 set assert4 [file exist $job_dir/A.job]
 set assert5 [file exist $job_dir/B.job]
@@ -164,6 +164,7 @@ send "\r"
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "\r"
 expect eof
+sleep 10
 puts "================="
 if {$assert1 == 1 && $assert2 == 1 && $assert3 == 1} {
 	puts "Case 3 : Success ! "
@@ -182,7 +183,6 @@ foreach name $listDelJob {
 foreach name $listDelTmp {
 	file delete $name
 }
-
 sleep 10
 spawn $wiperdogPath/bin/deployjob.sh
 expect "Enter bundle groupId: "
@@ -195,17 +195,17 @@ expect "Enter wiperdog host (default is : \"localhost\"):"
 send "\r"
 expect "Enter Rest post (default is : 8089): "
 send "\r"
-sleep 3
+sleep 10
 set assert1 [file exist $tmp_dir/A.job]
 set assert2 [file exist $tmp_dir/B.job]
 set assert3 [file exist $tmp_dir/C.job]
 #check if file downloaded and extract to tmp/job
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "1\r"
-sleep 3
+sleep 5
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "2\r"
-sleep 3
+sleep 5
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "\r"
 expect eof
@@ -244,7 +244,6 @@ foreach name $listDelJob {
 foreach name $listDelTmp {
 	file delete $name
 }
-
 sleep 10
 spawn $wiperdogPath/bin/deployjob.sh
 expect "Enter bundle groupId: "
@@ -257,7 +256,7 @@ expect "Enter wiperdog host (default is : \"localhost\"):"
 send "\r"
 expect "Enter Rest post (default is : 8089): "
 send "\r"
-sleep 3
+sleep 10
 #check if file downloaded and extract to tmp/job
 expect "Enter 'all' for install all files:  Left empty for exit : "
 send "4\r"
