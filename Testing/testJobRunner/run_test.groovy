@@ -78,6 +78,9 @@ public class TestJobRunner{
 				listCmd.add("var/job/" + jobTest)
 				listCmd.add("-s")
 				listCmd.add("0/10 * * * * ?")
+				// wait time for process job in 20s
+				listCmd.add("-w")
+				listCmd.add("20000")
 			} else {
 				// run job with relative path
 				listCmd.add("var/job/" + jobTest)
