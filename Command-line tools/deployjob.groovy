@@ -24,6 +24,7 @@ def getTextFromStream = { inputStream ->
 	return result.toString()
 }
 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+println "Please start wiperdog before run this tools !"
 println "**To configuring for maven repository ,please configure in wiperdog_home/etc/maven_repositories.cfg"
 println "Please input data for deploy job: "
 println "---------------------------"

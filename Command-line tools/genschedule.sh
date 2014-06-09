@@ -1,25 +1,12 @@
 #!/bin/sh
-#SET DEFAULT DIRECTORY
-self="$0"
-dir=`dirname "$self"`
-path=`pwd $0`
-if [ "$dir" == "." ]  
-then
-    export dirname=`pwd $0`
-else
-    export dirname=$path"/"$dir
-fi
-    export currentdir=`pwd`/
-
-# MOVE TO THE WIPERDOG HOME/BIN
-PREFIX=`cd "$dir/.." && pwd`
-cd "$PREFIX/bin"
+command -v groovy >/dev/null 2>&1 || { echo "Groovy not installed. Aborting." >&2; exit 1;}
+BASEDIR=$(dirname $0)
 
 if [ "$#" -eq 6 ] ; then
-	$PREFIX/bin/groovy $PREFIX/bin/genschedule.groovy $1 $2 $3 $4 $5 $6
+	groovy $BASEDIR/genschedule.groovy $1 $2 $3 $4 $5 $6
 else
 	if [ "$#" -eq 4 ] ;then
-		$PREFIX/bin/groovy $PREFIX/bin/genschedule.groovy $1 $2 $3 $4
+		groovy $BASEDIR/genschedule.groovy $1 $2 $3 $4
 	else
 		echo $#
 		echo "Incorrect parameter: "
