@@ -135,7 +135,7 @@ expect "Enter key of dest (file|http|mongoDB)(*): "
 send "not_available\r"
 set assert1 1
 expect {
-	"Enter key of dest (file|http|mongoDB)(*): " {
+	"Key of dest is incorrect. Please re-enter (file|http|mongoDB)(*): " {
 		send "file\r"
 		set assert1 0
 	}
@@ -164,7 +164,7 @@ expect "Enter delete key: "
 send "not_available\r"
 set assert1 1
 expect {
-	"This key is not exist. Please re-enter: " {
+	"This key is not exist. Please re-enter (*): " {
 	send "file\r"
 	set assert1 0
 	}

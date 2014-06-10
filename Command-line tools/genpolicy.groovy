@@ -30,6 +30,10 @@ public class ProcessGeneratePolicy {
 	def static finalConditionLevel = [:]
 	def static mapConditionLevelForKey = [:]
 	public static void main(String[] args) throws Exception {
+		println "**********************************************************************"
+		println "** This command will generate policy file in /var/job/policy folder.**"
+		println "** CTRL-C will quit without saving ...                              **"
+		println "**********************************************************************\n"
 		println ">>>>> ENTER POLICY'S INFORMATION COMMON <<<<<"
 		if (args[0] == ".") {
 			HOMEPATH = System.getProperty("user.dir")
@@ -76,6 +80,7 @@ public class ProcessGeneratePolicy {
 		def listKey = []
 		def sampleRecord = dbConn[jobName].find().limit(1)
 		def mapRecord
+		def dataUnit
 		println "LIST KEY AND DATA SAMPLE OF COLLECTION: $jobName"
 		while(sampleRecord.hasNext()) {
 			def dataRecord = sampleRecord.next()
@@ -88,7 +93,11 @@ public class ProcessGeneratePolicy {
 						listKey.remove("RECORD_SEQ")
 					}
 					listKey.each {
-						println "    - Field: " + it + ", Unit: " + dataRecord['KEYEXPR']['_unit'][it] + ", Data Sample: " + mapRecord[it]
+						dataUnit = ""
+						if ((dataRecord['KEYEXPR'] != null) && (dataRecord['KEYEXPR']['_unit'] != null) && (dataRecord['KEYEXPR']['_unit'][it] != null)) {
+							dataUnit = dataRecord['KEYEXPR']['_unit'][it]
+						}
+						println "    - Field: " + it + ", Unit: " + dataUnit + ", Data Sample: " + mapRecord[it]
 					}
 				} else {
 					println "No data in mongodb !!!"
@@ -104,7 +113,11 @@ public class ProcessGeneratePolicy {
 							listKey.remove("RECORD_SEQ")
 						}
 						listKey.each {
-							println "    - Group: " + key + ", Field: " + it + ", Unit: " + dataRecord['KEYEXPR']['_unit'][it] + ", Data Sample: " + dataForKey[it]
+							dataUnit = ""
+							if ((dataRecord['KEYEXPR'] != null) && (dataRecord['KEYEXPR']['_unit'] != null) && (dataRecord['KEYEXPR']['_unit'][it] != null)) {
+								dataUnit = dataRecord['KEYEXPR']['_unit'][it]
+							}
+							println "    - Group: " + key + ", Field: " + it + ", Unit: " + dataUnit + ", Data Sample: " + dataForKey[it]
 						}
 					} else {
 						println "No data in mongodb !!!"
@@ -227,10 +240,10 @@ public class ProcessGeneratePolicy {
 			println "=================================="
 		}
 		while(!checkAddNewParams) {
-			print "Enter param key: "
+			print "Enter param key (*): "
 			paramKey = reader.readLine()
 			while (paramKey == "") {
-				print "Key of param can not be empty, please re-enter: "
+				print "Key of param can not be empty, please re-enter (*): "
 				paramKey = reader.readLine()
 			}
 			print "Enter param value: "
@@ -262,22 +275,22 @@ public class ProcessGeneratePolicy {
 
 	public static void enterData() {
 		if (type == "Store") {
-			print "Enter Level (Low|Medium|High): "
+			print "Enter Level (Low|Medium|High) (*): "
 			level = reader.readLine()
 			while (level != "Low" && level != "Medium" && level != "High") {
-				print "Please choose level for policy: "
+				print "Please choose level for policy (Low|Medium|High) (*): "
 				level = reader.readLine()
 			}
-			print "Enter Condition (a > 3): "
+			print "Enter Condition (a > 3)(*): "
 			condition = reader.readLine()
 			while(condition == "") {
-				print "Condition can not be empty, please re-enter: "
+				print "Condition can not be empty, please re-enter (a > 3)(*): "
 				condition = reader.readLine()
 			}
-			print "Enter Message: "
+			print "Enter Message (*): "
 			message = reader.readLine().trim()
-			while(condition == "") {
-				print "Message can not be empty, please re-enter: "
+			while(message == "") {
+				print "Message can not be empty, please re-enter (*): "
 				message = reader.readLine()
 			}
 			mappolicy[condition] = message
@@ -288,10 +301,10 @@ public class ProcessGeneratePolicy {
 				confirmLoop = true
 			}
 		} else if (type == "Subtyped") {
-			print "Enter Group: "
+			print "Enter Group [D,M] (*): "
 			group = reader.readLine()
 			while (group == "" || !lstKeySubtyped.contains(group)) {
-				print "Group is incorrent, please re-enter: "
+				print "Group is incorrent, please re-enter (*): "
 				group = reader.readLine()
 			}
 			if (mappolicy[group] != null) {
@@ -300,22 +313,22 @@ public class ProcessGeneratePolicy {
 			if (finalConditionLevel[group] != null) {
 				mapConditionLevelForKey = finalConditionLevel[group]
 			}
-			print "Enter Level (Low|Medium|High): "
+			print "Enter Level (Low|Medium|High) (*): "
 			level = reader.readLine()
 			while (level != "Low" && level != "Medium" && level != "High") {
-				print "Please choose level for policy: "
+				print "Please choose level for policy (Low|Medium|High) (*): "
 				level = reader.readLine()
 			}
-			print "Enter Condition (a > 3): "
+			print "Enter Condition (a > 3)(*): "
 			condition = reader.readLine()
 			while(condition == "") {
-				print "Condition can not be empty, please re-enter: "
+				print "Condition can not be empty, please re-enter (a > 3)(*): "
 				condition = reader.readLine()
 			}
-			print "Enter Message: "
+			print "Enter Message (*): "
 			message = reader.readLine().trim()
 			while(message == "") {
-				print "Message can not be empty, please re-enter: "
+				print "Message can not be empty, please re-enter (*): "
 				message = reader.readLine()
 			}
 			mapPolicyForKey[condition] = message

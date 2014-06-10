@@ -56,7 +56,7 @@ set assert7 1
 expect "Enter DB Type (@MYSQL|@PGSQL|@MSSQL|@ORACLE)(*): " 
 send "\r"
 expect {
-	"DB Type is incorrect. Please re-enter: " {
+	"DB Type is incorrect. Please re-enter (@MYSQL|@PGSQL|@MSSQL|@ORACLE)(*): " {
 		send "@MYSQL\r"
 		set assert1 0
 	}
@@ -65,7 +65,7 @@ expect {
 expect "Enter Host ID (*): " 
 send "\r"
 expect {
-	"Host ID cannot be empty. Please re-enter: " {
+	"Host ID cannot be empty. Please re-enter (*): " {
 		send "test_hostid\r"
 		set assert2 0
 	}
@@ -75,7 +75,7 @@ expect {
 expect "Enter Host Name (*): " 
 send "\r"
 expect {
-	"Host name cannot be empty. Please re-enter: " {
+	"Host name cannot be empty. Please re-enter (*): " {
 		send "test_hostname\r"
 		set assert3 0
 	}
@@ -85,7 +85,7 @@ expect {
 expect "Enter Port (Port must be number)(*): " 
 send "\r"
 expect {
-	"Port must be number. Please re-enter: " {
+	"Port must be number. Please re-enter (*): " {
 		send "5433\r"
 		set assert4 0
 	}
@@ -103,7 +103,7 @@ expect {
 expect "Enter User Name (*): " 
 send "\r" 
 expect {
-	"User name cannot be empty. Please re-enter: " {
+	"User name cannot be empty. Please re-enter (*): " {
 		send "test_user\r"
 		set assert6 0
 	}
@@ -141,7 +141,7 @@ set assert1 1
 expect "Enter DB Type (@MYSQL|@PGSQL|@MSSQL|@ORACLE)(*): " 
 send "@NOTAVAILABLE\r"
 expect {
-	"DB Type is incorrect. Please re-enter: " {
+	"DB Type is incorrect. Please re-enter (@MYSQL|@PGSQL|@MSSQL|@ORACLE)(*): " {
 		send "@MYSQL\r"
 		set assert1 0
 	}
@@ -182,7 +182,7 @@ send "@MYSQL\r"
 expect "Enter Host ID (*): " 
 send "test.hostid\r"
 expect {
-	"Host ID cannot contains '.' character. Please re-enter: " {
+	"Host ID cannot contains '.' character. Please re-enter (*): " {
 		send "test_hostid\r"
 		set assert1 0		
 	}

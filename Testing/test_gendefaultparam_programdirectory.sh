@@ -18,11 +18,11 @@ puts "#Case1: Test programdirectory - Input all require params "
 spawn $wiperdogPath/bin/gendefaultparam.sh programdirectory
 expect "Enter DB Type (ORACLE|SQLS|MYSQL|POSTGRES)(*): " 
 send "MYSQL\r"
-expect "Enter default query: " 
+expect "Enter default directory \[/usr/local/lib/mysql/data\]: " 
 send "test_default_query\r"
-expect "Enter query to get programdirectory: " 
+expect "Enter query to get programdirectory \[SELECT @@basedir\]: " 
 send "SELECT programdirectory FROM somewhere\r"
-expect "Enter append data: "
+expect "Enter append data \[\]: "
 send "test_append\r"
 expect eof
 #After file written , check content with expected file
@@ -43,23 +43,23 @@ set assert1 1
 set assert2 1
 
 expect {
-   "DB Type is incorrect. Please re-enter: "  {
-    send "NOTAVAILABLEr\r"
+   "DB Type is incorrect. Please re-enter (ORACLE|SQLS|MYSQL|POSTGRES)(*): "  {
+    send "NOTAVAILABLE\r"
     set assert1 0
    }
 }
 
 expect {
-   "DB Type is incorrect. Please re-enter: "  {
+   "DB Type is incorrect. Please re-enter (ORACLE|SQLS|MYSQL|POSTGRES)(*): "  {
      send "MYSQL\r"
      set assert2 0
    }  
 }
-expect "Enter default query: " 
+expect "Enter default directory \[/usr/local/lib/mysql/data\]: " 
 send "test_default_query\r"
-expect "Enter query to get programdirectory: " 
+expect "Enter query to get programdirectory \[SELECT @@basedir\]: " 
 send "SELECT programdirectory FROM somewhere\r"
-expect "Enter append data: "
+expect "Enter append data \[\]: "
 send "test_append\r"
 expect eof
 #After file written , check content with expected file
@@ -77,11 +77,11 @@ puts "#Case 3: Test programdirectory - Input missing default query"
 spawn $wiperdogPath/bin/gendefaultparam.sh programdirectory
 expect "Enter DB Type (ORACLE|SQLS|MYSQL|POSTGRES)(*): " 
 send "MYSQL\r"
-expect "Enter default query: " 
+expect "Enter default directory \[/usr/local/lib/mysql/data\]: " 
 send "\r"
-expect "Enter query to get programdirectory: " 
+expect "Enter query to get programdirectory \[SELECT @@basedir\]: " 
 send "SELECT programdirectory FROM somewhere\r"
-expect "Enter append data: "
+expect "Enter append data \[\]: "
 send "test_append\r"
 expect eof
 #After file written , check content with expected file
@@ -98,11 +98,11 @@ puts "#Case 4: Test programdirectory - Input missing query to get programdirecto
 spawn $wiperdogPath/bin/gendefaultparam.sh programdirectory
 expect "Enter DB Type (ORACLE|SQLS|MYSQL|POSTGRES)(*): " 
 send "MYSQL\r"
-expect "Enter default query: " 
+expect "Enter default directory \[/usr/local/lib/mysql/data\]: " 
 send "\r"
-expect "Enter query to get programdirectory: " 
+expect "Enter query to get programdirectory \[SELECT @@basedir\]: " 
 send "\r"
-expect "Enter append data: "
+expect "Enter append data \[\]: "
 send "test_append\r"
 expect eof
 #After file written , check content with expected file
@@ -119,11 +119,11 @@ puts "#Case 5: Test programdirectory - Input missing append data"
 spawn $wiperdogPath/bin/gendefaultparam.sh programdirectory
 expect "Enter DB Type (ORACLE|SQLS|MYSQL|POSTGRES)(*): " 
 send "MYSQL\r"
-expect "Enter default query: " 
+expect "Enter default directory \[/usr/local/lib/mysql/data\]: " 
 send "\r"
-expect "Enter query to get programdirectory: " 
+expect "Enter query to get programdirectory \[SELECT @@basedir\]: " 
 send "\r"
-expect "Enter append data: "
+expect "Enter append data \[\]: "
 send "\r"
 expect eof
 #After file written , check content with expected file
