@@ -225,7 +225,7 @@ send "test_hostname\r"
 expect "Enter Port (Port must be number)(*): " 
 send "test_port\r"
 expect {
-	"Port must be number. Please re-enter: " {
+	"Port must be number. Please re-enter (*): " {
 		send "5433\r"
 		set assert1 0	
 	}

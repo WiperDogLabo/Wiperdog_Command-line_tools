@@ -26,19 +26,19 @@ expect "Enter IstIid: "
 send "localhost-@MYSQL-information_schema\r"
 expect "DO YOU WANT CREATE/UPDATE POLICY (y|n)?"
 send "y\r"
-expect "Enter Level (Low|Medium|High):"
+expect "Enter Level (Low|Medium|High) (*):"
 send "Medium\r"
-expect "Enter Condition (a > 3): "
+expect "Enter Condition (a > 3)(*): "
 send "WritesCnt > 100\r"
-expect "Enter Message: "
+expect "Enter Message (*): "
 send "Write count is so high\r"
 expect "Do you want add more condition (y|Y|n|N) ?"
 send "y\r"
-expect "Enter Level (Low|Medium|High):"
+expect "Enter Level (Low|Medium|High) (*):"
 send "Medium\r"
-expect "Enter Condition (a > 3): "
+expect "Enter Condition (a > 3)(*): "
 send "ReadsCnt > 100\r"
-expect "Enter Message: "
+expect "Enter Message (*): "
 send "Read count is so high\r"
 expect "Do you want add more condition (y|Y|n|N) ?"
 send "n\r"
@@ -64,23 +64,23 @@ expect "Enter IstIid: "
 send "localhost-@MYSQL-information_schema\r"
 expect "DO YOU WANT CREATE/UPDATE POLICY (y|n)? "
 send "y\r"
-expect "Enter Group: "
+expect -re "Enter Group .* "
 send "M\r"
-expect "Enter Level (Low|Medium|High):"
+expect "Enter Level (Low|Medium|High) (*): "
 send "Low\r"
-expect "Enter Condition (a > 3): "
+expect "Enter Condition (a > 3)(*): "
 send "DataFreeSize < 100\r"
-expect "Enter Message: "
+expect "Enter Message (*): "
 send "Database free size is low\r"
 expect "Do you want add more condition (y|Y|n|N) ?"
 send "y\r"
-expect "Enter Group: "
+expect -re "Enter Group .* "
 send "D\r"
-expect "Enter Level (Low|Medium|High):"
+expect "Enter Level (Low|Medium|High) (*):"
 send "Low\r"
-expect "Enter Condition (a > 3): "
+expect "Enter Condition (a > 3)(*): "
 send "UsedDataPct > 100\r"
-expect "Enter Message: "
+expect "Enter Message (*): "
 send "Used data size is hight\r"
 expect "Do you want add more condition (y|Y|n|N) ?"
 send "n\r"
@@ -129,13 +129,13 @@ expect "Enter IstIid: "
 send "localhost-@MYSQL-information_schema\r"
 expect "DO YOU WANT CREATE/UPDATE POLICY (y|n)? "
 send "y\r"
-expect "Enter Group: "
+expect -re "Enter Group .* "
 send "M\r"
-expect "Enter Level (Low|Medium|High):"
+expect "Enter Level (Low|Medium|High) (*):"
 send "Low\r"
-expect "Enter Condition (a > 3): "
+expect "Enter Condition (a > 3)(*): "
 send "DataFreeSize < 100\r"
-expect "Enter Message: "
+expect "Enter Message (*): "
 send "Database free size is low\r"
 expect "Do you want add more condition (y|Y|n|N) ?"
 send "n\r"
@@ -164,11 +164,11 @@ send "localhost-@MYSQL-information_schema\r"
 expect "DO YOU WANT CREATE/UPDATE POLICY (y|n)? "
 send "y\r"
 
-expect "Enter Group: "
+expect -re "Enter Group .*"
 send "\r"
 set assert1 1
 expect  {
-	"Group is incorrent, please re-enter:" {
+	"Group is incorrent, please re-enter (*):" {
 		send "NOT_AVAILABLE\r"
 		set assert1 0
 		
@@ -177,31 +177,31 @@ expect  {
 }
 set assert2 1
 expect {
-	"Group is incorrent, please re-enter:" {
+	"Group is incorrent, please re-enter (*):" {
 		send "M\r"
 		set assert2 0
 	}	
 } 
 
-expect "Enter Level (Low|Medium|High):"
+expect "Enter Level (Low|Medium|High) (*): "
 send "\r"
 set assert3 1
 expect {
-	"Please choose level for policy:" {
+	"Please choose level for policy (*):" {
 		set assert3 0
 		send "NOT_AVAILABLE\r"		
 	}
 }
 set assert4 1
 expect {
-	"Please choose level for policy:" {
+	"Please choose level for policy (*):" {
 		set assert4 0
 		send "Low\r"
 	}
 }
-expect "Enter Condition (a > 3): "
+expect "Enter Condition (a > 3)(*): "
 send "DataFreeSize < 100\r"
-expect "Enter Message: "
+expect "Enter Message (*): "
 send "Database free size is low\r"
 expect "Do you want add more condition (y|Y|n|N) ?"
 send "n\r"
@@ -228,26 +228,26 @@ expect "Enter IstIid: "
 send "localhost-@MYSQL-information_schema\r"
 expect "DO YOU WANT CREATE/UPDATE POLICY (y|n)? "
 send "y\r"
-expect "Enter Group: "
+expect -re "Enter Group .* "
 send "M\r"
-expect "Enter Level (Low|Medium|High):"
+expect "Enter Level (Low|Medium|High) (*):"
 send "Low\r"
-expect "Enter Condition (a > 3): "
+expect "Enter Condition (a > 3)(*): "
 send "\r"
 set assert1 1
 expect {
-	 "Condition can not be empty, please re-enter: " {
+	 "Condition can not be empty, please re-enter (a > 3)(*): " {
 		send "require condition\r"
 		set assert1 0
 	}
 
 }
 
-expect "Enter Message: "
+expect "Enter Message (*): "
 send "\r"
 set assert2 1
 expect {
-	 "Message can not be empty, please re-enter: " {
+	 "Message can not be empty, please re-enter (*): " {
 		set assert2 0
 		send "require message\r"
 	}
@@ -282,23 +282,23 @@ expect "Enter IstIid: "
 send "localhost-@MYSQL-information_schema\r"
 expect "DO YOU WANT CREATE/UPDATE POLICY (y|n)? "
 send "y\r"
-expect "Enter Group: "
+expect -re "Enter Group .* "
 send "M\r"
-expect "Enter Level (Low|Medium|High):"
+expect "Enter Level (Low|Medium|High) (*):"
 send "Low\r"
-expect "Enter Condition (a > 3): "
+expect "Enter Condition (a > 3)(*): "
 send "update_condition\r"
-expect "Enter Message: "
+expect "Enter Message (*): "
 send "update_message\r"
 expect "Do you want add more condition (y|Y|n|N) ?"
 send "y\r"
-expect "Enter Group: "
+expect -re "Enter Group .* "
 send "D\r"
-expect "Enter Level (Low|Medium|High):"
+expect "Enter Level (Low|Medium|High) (*):"
 send "High\r"
-expect "Enter Condition (a > 3): "
+expect "Enter Condition (a > 3)(*): "
 send "update_condition_2\r"
-expect "Enter Message: "
+expect "Enter Message (*): "
 send "update_message_2\r"
 expect "Do you want add more condition (y|Y|n|N) ?"
 send "n\r"
@@ -328,13 +328,13 @@ expect "DO YOU WANT CREATE/UPDATE POLICY (y|n)? "
 send "n\r"
 expect "DO YOU WANT CREATE/UPDATE PARAM (y|n)? "
 send "y\r"
-expect "Enter param key: "
+expect "Enter param key (*): "
 send "a\r"
 expect "Enter param value: "
 send "1\r"
 expect "Add more param for policy (y|n)? "
 send "y\r"
-expect "Enter param key: "
+expect "Enter param key (*): "
 send "b\r"
 expect "Enter param value: "
 send "2\r"
@@ -363,11 +363,11 @@ expect "DO YOU WANT CREATE/UPDATE POLICY (y|n)? "
 send "n\r"
 expect "DO YOU WANT CREATE/UPDATE PARAM (y|n)? "
 send "y\r"
-expect "Enter param key: "
+expect "Enter param key (*): "
 send "\r"
 set assert1 1
 expect {
-	"Key of param can not be empty, please re-enter: " {
+	"Key of param can not be empty, please re-enter (*): " {
 		set assert1 0
 		send "a\r"
 	}
@@ -376,7 +376,7 @@ expect "Enter param value: "
 send "\r"
 expect "Add more param for policy (y|n)? "
 send "y\r"
-expect "Enter param key: "
+expect "Enter param key (*): "
 send "b\r"
 expect "Enter param value: "
 send "2\r"
@@ -407,13 +407,13 @@ expect "DO YOU WANT CREATE/UPDATE POLICY (y|n)? "
 send "n\r"
 expect "DO YOU WANT CREATE/UPDATE PARAM (y|n)? "
 send "y\r"
-expect "Enter param key: "
+expect "Enter param key (*): "
 send "b\r"
 expect "Enter param value: "
 send "3\r"
 expect "Add more param for policy (y|n)? "
 send "y\r"
-expect "Enter param key: "
+expect "Enter param key (*): "
 send "c\r"
 expect "Enter param value: "
 send "4\r"
